@@ -1,0 +1,75 @@
+Sub InpatientRequests()
+    
+    Dim a As Long 'template start row and name row
+    Dim b As Long 'template start column
+    Dim c As Long 'inpinventory start row
+    Dim d As Long 'inpinventory start column
+    Dim e As Long 'required inpatient rotations start row
+    Dim f As Long 'required inpatient rotations start column
+    Dim g As Long 'residents name column
+    
+    Dim templateLR As Long 'schedule template last row
+    Dim ReqIPLR As Long 'required inpatient rotations last row
+    Dim ipInvLR As Long 'inpatient inventory last row
+    
+    Dim templateLC As Long 'schedule template last column
+    Dim ReqIPLC As Long 'required inpatient rotations last column
+    Dim ipInvLC As Long 'inpatient inventory last column
+    
+    a = 9
+    b = 3
+    c = 2
+    d = 2
+    e = 1
+    f = 3
+    g = 2
+    
+    templateLR = Worksheets("Templates").Cells(Rows.Count, 1).End(xlUp).Row
+    ReqIPLR = Worksheets("INPReq").Cells(Rows.Count, 2).End(xlUp).Row
+    ipInvLR = Worksheets("INPInv").Cells(Rows.Count, 1).End(xlUp).Row
+    
+    templateLC = Worksheets("Templates").UsedRange.Columns.Count
+    ReqIPLC = Worksheets("INPReq").UsedRange.Columns.Count
+    ipInvLC = Worksheets("INPInv").UsedRange.Columns.Count
+    
+    For b = 3 To templateLC
+        
+        While a < templateLR
+         
+                a = a + 1 'schedule row and name row
+                e = e + 1 'required row
+         
+            For f = 3 To 4
+                
+                If Worksheets("Templates").Cells(a, b).Text = "Inpatient" Then
+         
+                    For c = 2 To ipInvLR
+         
+                        If Worksheets("INPInv").Cells(c, d).Text = Worksheets("INPReq").Cells(e, f).Text Then
+                                Worksheets("Templates").Cells(a, b).Value = Worksheets("INPInv").Cells(c, d).Text
+         
+                            If Worksheets("Templates").Cells(a, b).Text = Worksheets("INPInv").Cells(c, d).Text Then
+                                    Worksheets("INPReq").Cells(e, f).Value = Worksheets("INPReq").Cells(e, f).Value & ": Scheduled"
+                            End If
+         
+                            If Worksheets("Templates").Cells(a, b).Text = Worksheets("INPInv").Cells(c, d).Text Then
+                                    Worksheets("INPInv").Cells(c, d).Value = Worksheets("Templates").Cells(a, g).Text
+                            End If
+         
+                        End If
+         
+                    Next
+        
+                End If
+                
+            Next
+                
+        Wend
+        
+        a = 9 'schedule row and name row
+        e = 1 'required row
+        d = d + 1
+        
+    Next
+        
+End Sub

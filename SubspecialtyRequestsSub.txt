@@ -1,0 +1,76 @@
+Sub SubspecialtyRequests()
+    
+    Dim a As Long 'template start row and name row
+    Dim b As Long 'template start column
+    Dim c As Long 'subspecialty inventory start row
+    Dim d As Long 'subspecialty inventory start column
+    Dim e As Long 'required subspecialty rotations start row
+    Dim f As Long 'required subspecialty rotations start column
+    Dim g As Long 'residents name column
+    
+    Dim templateLR As Long 'schedule template last row
+    Dim ReqSSLR As Long 'required subspecialty rotations last row
+    Dim ssInvLR As Long 'subspecialty inventory last row
+    
+    Dim templateLC As Long 'schedule template last column
+    Dim ReqSSLC As Long 'required subspecialty rotations last column
+    Dim ssInvLC As Long 'subspecialty inventory last column
+    
+    a = 9
+    b = 3
+    c = 2
+    d = 2
+    e = 1
+    f = 3
+    g = 2
+    
+    templateLR = Worksheets("Templates").Cells(Rows.Count, 1).End(xlUp).Row
+    ReqSSLR = Worksheets("SSReq").Cells(Rows.Count, 2).End(xlUp).Row
+    ssInvLR = Worksheets("SSInv").Cells(Rows.Count, 1).End(xlUp).Row
+    
+    templateLC = Worksheets("Templates").UsedRange.Columns.Count
+    ReqSSLC = Worksheets("SSReq").UsedRange.Columns.Count
+    ssInvLC = Worksheets("SSInv").UsedRange.Columns.Count
+    
+    For b = 3 To templateLC
+        
+        While a < templateLR
+         
+                a = a + 1 'schedule row and name row
+                e = e + 1 'required row
+         
+            For f = 3 To 5
+                
+                If Worksheets("Templates").Cells(a, b).Text = "Subspecialty" Then
+         
+                    For c = 2 To ssInvLR
+         
+                        If Worksheets("SSInv").Cells(c, d).Text = Worksheets("SSReq").Cells(e, f).Text Then
+                                Worksheets("Templates").Cells(a, b).Value = Worksheets("SSInv").Cells(c, d).Text
+         
+                            If Worksheets("Templates").Cells(a, b).Text = Worksheets("SSInv").Cells(c, d).Text Then
+                                    Worksheets("SSReq").Cells(e, f).Value = Worksheets("SSReq").Cells(e, f).Value & ": Scheduled"
+                            End If
+         
+                            If Worksheets("Templates").Cells(a, b).Text = Worksheets("SSInv").Cells(c, d).Text Then
+                                    Worksheets("SSInv").Cells(c, d).Value = Worksheets("Templates").Cells(a, g).Text
+                            End If
+         
+                        End If
+         
+                    Next
+        
+                End If
+                
+            Next
+                
+        Wend
+        
+        a = 9 'schedule row and name row
+        e = 1 'required row
+        d = d + 1
+        
+    Next
+        
+End Sub
+
