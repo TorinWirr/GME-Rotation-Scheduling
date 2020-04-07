@@ -1,5 +1,5 @@
 # GME-Rotation-Scheduling
-Using VBA this allows you to draft Resident/Fellow schedules based on templates, trainee requests, program requirements, and available rotations.
+Using VBA this allows you to draft Graduate Medical Education (GME) Resident/Fellow schedules based on schedule templates, trainee requests, program requirements, and available rotations.
 
 ## Schedule Templates
 The example I'm using is a program with 13 periods and 60 trainees. The schedule template is where you determine which rotation type each trainee is eligible for in each period. You can alter the code to include as many rotation types as you need, for this example I'm just using 2: Inpatient and Subspecialty. Other rotation types might include electives, research, local-away, international, etc.
